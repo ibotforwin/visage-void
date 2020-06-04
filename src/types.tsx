@@ -47,6 +47,8 @@ export type ContextValue = {
     dragToChange: boolean;
   };
   editCount: number;
+  savedImage?: { ext: string; filename: string; imageData: string };
+  p5Object?: any;
 };
 
 export type ContextType = {

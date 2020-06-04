@@ -35,8 +35,14 @@ const styles: { downloadButton: CSSProperties } = {
 
 const CanvasWrapper = () => {
   const { context, setContext } = useContext(Context);
-  const { imageInfo, detections, setting, editingIndex, editCount } = context;
-  const [p5Object, setP5Object] = useState();
+  const {
+    imageInfo,
+    detections,
+    setting,
+    editingIndex,
+    editCount,
+    p5Object,
+  } = context;
   const [saveAfterNextDraw, setSaveAfterNextDraw] = useState<boolean>(false);
   const { src, height, width } = imageInfo;
   const { heightMultiplier, widthMultiplier, type, color } = setting;
@@ -54,7 +60,7 @@ const CanvasWrapper = () => {
   const [loop, setLoop] = useState<number>(0);
 
   const setup = (p5, canvasParentRef) => {
-    setP5Object(p5);
+    setContext({ ...context, p5Object: p5 });
     if (width && height && src) {
       p5.createCanvas(width, height).parent(canvasParentRef);
       setImage(p5.loadImage(src));
@@ -221,6 +227,7 @@ const CanvasWrapper = () => {
   };
 
   const draw = (p5) => {
+    setImage(p5.loadImage(src));
     if (image) {
       p5.image(image, 0, 0);
       if (detections) {
